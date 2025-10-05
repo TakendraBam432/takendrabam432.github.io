@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Takendra Bam | Home</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<header>
+  <div class="logo">Takendra Bam</div>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="posts.html">Posts</a>
+    <a href="projects.html">Projects</a>
+    <a href="contact.html">Contact</a>
+  </nav>
+</header>
+
+<main>
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-content">
+      <h1>Hello, I'm Takendra Bam</h1>
+      <p>Cybersecurity student | Developer | Tech Enthusiast</p>
+    </div>
+  </section>
+
+  <!-- About + Hobbies Grid -->
+  <section class="about-hobbies-grid">
+    <div class="card about">
+      <h2>About Me</h2>
+      <p>Hi! I'm 17, passionate about coding, cybersecurity, and building modern apps. I love music, digital art, cooking, and spending time with my dog Alpha.</p>
+    </div>
+    <div class="card hobbies">
+      <h2>My Hobbies & Interests</h2>
+      <ul>
+        <li>Web Development & Coding</li>
+        <li>Cybersecurity & Ethical Hacking</li>
+        <li>Cooking (pakoda & samosas!)</li>
+        <li>Listening to music</li>
+        <li>Digital Art & Memes</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Latest Posts Grid -->
+  <section class="latest-posts">
+    <h2>Latest Posts</h2>
+    <div class="posts-grid" id="homePostsContainer">
+      <!-- Posts will appear here -->
+    </div>
+  </section>
+</main>
+
+<footer>
+  &copy; 2025 Takendra Bam | <a href="contact.html">Contact Me</a>
+</footer>
+
+<script src="js/main.js"></script>
+<script>
+  displayPosts('homePostsContainer');
+</script>
+</body>
+</html>
