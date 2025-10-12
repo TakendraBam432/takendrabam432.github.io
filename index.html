@@ -5,457 +5,456 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Takendra Bam - Personal Portfolio</title>
 <style>
-/* --- 1. Variables and Reset ---- */
+/* ========================== */
+/* CHANGE COLORS HERE IF NEEDED */
+/* ========================== */
 :root {
-    --primary-blue: #007bff;
-    --dark-blue: #0056b3;
-    --deep-blue: #001f5c;
-    --text-dark: #333;
-    --text-light: #fff;
-    --max-width: 1300px;
+  --primary-color: #007bff; /* Change this color to affect whole layout */
+  --dark-color: #0056b3;
+  --deep-color: #001f5c;
+  --text-dark: #333;
+  --text-light: #fff;
+  --max-width: 1300px;
 }
 
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Arial', sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Arial', sans-serif;
 }
 
 body {
-    line-height: 1.6;
-    color: var(--text-dark);
-    background-color: #f7f9fc;
+  line-height: 1.6;
+  color: var(--text-dark);
+  background-color: #f7f9fc;
 }
 
-/* --- 2. Top Header Container (Blue Area) --- */
+/* Top header */
 .top-container {
-    background-image: linear-gradient(to right top, #001f5c, #002d73, #003c8c, #004ba5, #005bc0);
-    color: var(--text-light);
-    padding-bottom: 100px; /* Reduced to avoid excessive empty blue space */
-    position: relative;
-    z-index: 1;
+  background-image: linear-gradient(to right top, var(--deep-color), #002d73, #003c8c, #004ba5, var(--primary-color));
+  color: var(--text-light);
+  padding-bottom: 100px;
+  position: relative;
+  z-index: 1;
 }
 
 .header-top {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 15px 5%;
-    max-width: var(--max-width);
-    margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 5%;
+  max-width: var(--max-width);
+  margin: 0 auto;
 }
 
 .logo-text {
-    font-size: 1.2em;
-    font-weight: bold;
-    letter-spacing: 1px;
-    color: var(--text-light);
+  font-size: 1.2em;
+  font-weight: bold;
+  letter-spacing: 1px;
+  color: var(--text-light);
 }
 
 .header-info-text {
-    font-size: 0.9em;
-    opacity: 0.8;
-    text-align: right;
+  font-size: 0.9em;
+  opacity: 0.8;
+  text-align: right;
 }
 
 .main-title-container {
-    text-align: center;
-    padding: 60px 5% 0;
-    max-width: 900px;
-    margin: 0 auto;
+  text-align: center;
+  padding: 60px 5% 0;
+  max-width: 900px;
+  margin: 0 auto;
 }
 
 .main-title-container h1 {
-    font-size: 6vw;
-    font-weight: 900;
-    letter-spacing: 5px;
-    text-transform: uppercase;
-    line-height: 1;
-    color: rgba(255, 255, 255, 0.9);
-    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+  font-size: 6vw;
+  font-weight: 900;
+  letter-spacing: 5px;
+  text-transform: uppercase;
+  line-height: 1;
+  color: rgba(255, 255, 255, 0.9);
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
 }
 
-/* --- 3. Main Content Wrapper (White Card) --- */
+/* Main content wrapper */
 .main-content-wrapper {
-    background-color: #fff;
-    max-width: var(--max-width); /* Using variable for consistency */
-    margin: -80px auto 30px; /* Lifted less, less bottom space */
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-    border-radius: 10px;
-    position: relative;
-    z-index: 10;
-    overflow: hidden;
+  background-color: #fff;
+  max-width: var(--max-width);
+  margin: -80px auto 30px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  position: relative;
+  z-index: 10;
+  overflow: hidden;
 }
 
-/* Navigation inside content */
+/* Navigation */
 .content-nav {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 15px 5%;
-    border-bottom: 1px solid #eee;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 25px 5%;
+  border-bottom: 1px solid #eee;
+  position: relative;
 }
 
 .content-nav .logo {
-    width: 30px;
-    height: 30px;
-    background-color: var(--primary-blue);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    font-size: 0.8em;
-    font-weight: bold;
+  position: absolute;
+  left: 5%;
+  width: 30px;
+  height: 30px;
+  background-color: var(--primary-color);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 0.8em;
+  font-weight: bold;
 }
 
 .content-nav ul {
-    list-style: none;
-    display: flex;
-    gap: 25px;
+  list-style: none;
+  display: flex;
+  gap: 25px;
 }
 
 .content-nav a {
-    text-decoration: none;
-    color: var(--text-dark);
-    font-size: 0.9em;
-    font-weight: 500;
-    transition: color 0.3s;
+  text-decoration: none;
+  color: var(--text-dark);
+  font-size: 0.9em;
+  font-weight: 500;
+  transition: color 0.3s;
 }
 
 .content-nav a:hover {
-    color: var(--primary-blue);
+  color: var(--primary-color);
 }
 
+/* Hamburger icon */
+.menu-toggle {
+  position: absolute;
+  right: 5%;
+  font-size: 1.8em;
+  cursor: pointer;
+  color: var(--text-dark);
+  display: none;
+}
+
+/* Mobile menu */
+.mobile-menu {
+  display: none;
+  flex-direction: column;
+  background-color: white;
+  position: absolute;
+  top: 60px;
+  right: 5%;
+  width: 200px;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  overflow: hidden;
+}
+
+.mobile-menu a {
+  padding: 12px;
+  text-decoration: none;
+  color: var(--text-dark);
+  border-bottom: 1px solid #eee;
+  text-align: center;
+  transition: all 0.3s;
+}
+
+.mobile-menu a:hover {
+  background-color: var(--primary-color);
+  color: var(--text-light);
+}
+
+/* Hide desktop contact button */
 .contact-btn {
-    background-color: var(--primary-blue);
-    color: var(--text-light);
-    padding: 8px 20px;
-    border-radius: 5px;
-    text-decoration: none;
-    font-weight: bold;
-    transition: background-color 0.3s;
+  display: none;
 }
 
-.contact-btn:hover {
-    background-color: var(--dark-blue);
-}
-
-/* --- 4. Hero Section & Content Styling --- */
+/* Hero section */
 .hero-section {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 60px 5%; /* Increased padding for better desktop spacing */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 60px 5%;
 }
 
 .hero-text {
-    max-width: 55%; /* Increased width for text on desktop */
+  max-width: 55%;
 }
 
 .hero-text .hello {
-    display: inline-block;
-    background-color: #e6f0ff;
-    color: var(--primary-blue);
-    padding: 5px 10px;
-    border: 1px solid var(--primary-blue);
-    border-radius: 3px;
-    font-size: 0.9em;
-    margin-bottom: 15px;
+  display: inline-block;
+  background-color: #e6f0ff;
+  color: var(--primary-color);
+  padding: 5px 10px;
+  border: 1px solid var(--primary-color);
+  border-radius: 3px;
+  font-size: 0.9em;
+  margin-bottom: 15px;
 }
 
 .hero-text h2 {
-    font-size: 2.5em;
-    line-height: 1.2;
-    margin-bottom: 10px;
-    font-weight: 600;
+  font-size: 2.5em;
+  line-height: 1.2;
+  margin-bottom: 10px;
+  font-weight: 600;
 }
 
 .hero-text h2 strong {
-    color: var(--primary-blue);
-    font-weight: 700;
+  color: var(--primary-color);
 }
 
 .hero-text p {
-    font-size: 0.95em;
-    color: #666;
-    margin-bottom: 30px;
-    line-height: 1.5;
+  font-size: 0.95em;
+  color: #666;
+  margin-bottom: 30px;
+  line-height: 1.5;
 }
 
 .hero-buttons {
-    display: flex;
-    gap: 15px;
+  display: flex;
+  gap: 15px;
 }
 
 .hero-buttons .btn {
-    padding: 12px 25px;
-    border-radius: 5px;
-    text-decoration: none;
-    font-weight: bold;
-    transition: background-color 0.3s;
-    border: 2px solid transparent;
+  padding: 12px 25px;
+  border-radius: 5px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: background-color 0.3s;
+  border: 2px solid transparent;
 }
 
 .hero-buttons .btn.primary {
-    background-color: var(--primary-blue);
-    color: var(--text-light);
+  background-color: var(--primary-color);
+  color: var(--text-light);
 }
 
 .hero-buttons .btn.secondary {
-    background-color: #fff;
-    color: var(--text-dark);
-    border-color: #ccc;
+  background-color: #fff;
+  color: var(--text-dark);
+  border-color: #ccc;
 }
 
 .hero-buttons .btn.primary:hover {
-    background-color: var(--dark-blue);
+  background-color: var(--dark-color);
 }
 
 .hero-buttons .btn.secondary:hover {
-    border-color: var(--primary-blue);
+  border-color: var(--primary-color);
 }
 
-/* Image Container and Blob/Tag Styles */
+/* Image Container */
 .hero-image-container {
-    max-width: 40%;
-    position: relative;
-    z-index: 5;
-    /* Added fixed height for the image area to contain the blob properly */
-    height: 400px; 
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  max-width: 40%;
+  position: relative;
+  z-index: 5;
+  height: 400px; 
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .hero-image-container img {
-    /* Placeholder styles, assume actual image will be sized appropriately */
-    width: 80%; 
-    height: auto;
-    border-radius: 5px;
-    object-fit: cover;
-    z-index: 10;
+  width: 80%; 
+  height: auto;
+  border-radius: 5px;
+  object-fit: cover;
+  z-index: 10;
 }
 
 .blue-blob {
-    position: absolute;
-    background-color: var(--primary-blue);
-    opacity: 0.15;
-    border-radius: 50%;
-    z-index: 5;
+  position: absolute;
+  background-color: var(--primary-color);
+  opacity: 0.15;
+  border-radius: 50%;
+  z-index: 5;
 }
 
 .blob-1 {
-    width: 280px; /* Slightly larger blob for effect */
-    height: 280px;
-    bottom: 50px;
-    right: 50px;
-    transform: none; /* Removed confusing scale transform */
+  width: 280px;
+  height: 280px;
+  bottom: 50px;
+  right: 50px;
 }
 
 .image-tag {
-    position: absolute;
-    background-color: var(--primary-blue);
-    color: var(--text-light);
-    padding: 5px 10px;
-    border-radius: 5px;
-    font-size: 0.7em;
-    font-weight: bold;
-    z-index: 15;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  position: absolute;
+  background-color: var(--primary-color);
+  color: var(--text-light);
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-size: 0.7em;
+  font-weight: bold;
+  z-index: 15;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
 }
 
 .tag-web {
-    top: 50px;
-    left: 20px;
-    transform: rotate(-5deg);
+  top: 50px;
+  left: 20px;
 }
 
 .tag-uiux {
-    bottom: 80px;
-    right: 30px;
-    background-color: #000;
-    transform: rotate(5deg);
+  bottom: 80px;
+  right: 30px;
+  background-color: #000;
 }
 
 /* Skills bar */
 .skills-bar {
-    background-color: #222;
-    color: var(--text-light);
-    display: flex;
-    justify-content: space-around;
-    padding: 15px 5%;
-    max-width: var(--max-width);
-    margin: 0 auto;
-    border-radius: 0 0 10px 10px;
+  background-color: #222;
+  color: var(--text-light);
+  display: flex;
+  justify-content: space-around;
+  padding: 15px 5%;
+  max-width: var(--max-width);
+  margin: 0 auto;
+  border-radius: 0 0 10px 10px;
 }
 
 .skill-item {
-    text-align: center;
-    font-weight: bold;
-    font-size: 0.9em;
-    display: flex;
-    align-items: center;
-    gap: 10px;
+  text-align: center;
+  font-weight: bold;
+  font-size: 0.9em;
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
 .skill-item::before {
-    content: '+';
-    font-size: 1.5em;
-    color: var(--primary-blue);
+  content: '+';
+  font-size: 1.5em;
+  color: var(--primary-color);
 }
 
-/* --- 5. Responsive Adjustments (The Fixes) --- */
-
+/* ========================== */
+/* RESPONSIVE FIXES */
+/* ========================== */
 @media (max-width: 900px) {
-    /* STACKING LAYOUT */
-    .hero-section {
-        flex-direction: column;
-        text-align: center;
-        padding: 40px 5%;
-    }
+  .hero-section {
+    flex-direction: column;
+    padding: 40px 5%;
+  }
 
-    .hero-text {
-        max-width: 100%; /* Text uses full available width */
-        margin-bottom: 30px;
-    }
-    
-    .hero-text h2 {
-        font-size: 2em; /* Shrink title */
-    }
+  .hero-text {
+    max-width: 100%;
+    margin-bottom: 30px;
+    text-align: left; /* <-- LEFT ALIGN HERO TEXT ON SMALL DEVICES */
+  }
 
-    .hero-buttons {
-        justify-content: center;
-    }
+  /* FIXED HERO IMAGE ON SMALL DEVICES */
+  .hero-image-container {
+    max-width: 100%;
+    height: auto;
+    margin-top: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0; /* prevents squishing */
+  }
 
-    .header-top {
-        flex-direction: column;
-        padding-bottom: 5px; /* Adjust header top */
-    }
-    
-    .header-info-text {
-        text-align: center;
-    }
-    
-    /* IMAGE CONTAINER ADJUSTMENTS */
-    .hero-image-container {
-        max-width: 100%;
-        height: 300px; /* Reduced height */
-        order: 1; /* Puts image after text on small screens */
-        margin-top: 30px;
-    }
+  .hero-image-container img {
+    width: 100%; /* responsive full width */
+    height: auto;
+    border-radius: 5px;
+    object-fit: cover;
+  }
 
-    .hero-image-container img {
-        width: 60%; /* Ensure image is not too wide */
-    }
+  .header-top {
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 15px 5%;
+  }
 
-    /* BLOB/TAG ADJUSTMENTS for Mobile */
-    .blob-1 {
-        width: 200px;
-        height: 200px;
-        bottom: 50px;
-        right: 50%; /* Center the blob */
-        transform: translateX(50%);
-    }
+  .menu-toggle {
+    display: block;
+  }
 
-    .image-tag {
-        font-size: 0.6em;
-        padding: 4px 8px;
-    }
-    
-    .tag-web {
-        top: 20px;
-        left: 30px;
-        transform: rotate(-10deg);
-    }
-
-    .tag-uiux {
-        bottom: 10px;
-        right: 30px;
-        transform: rotate(10deg);
-    }
-    
-    /* NAVIGATION HIDING */
-    .content-nav ul {
-        display: none; /* Hide main links on small screens */
-    }
-    
-    /* SKILLS BAR WRAP */
-    .skills-bar {
-        flex-wrap: wrap;
-        gap: 10px;
-        padding: 15px 10px;
-    }
-    
-    .skill-item {
-        font-size: 0.8em;
-    }
+  .content-nav ul {
+    display: none;
+  }
 }
 </style>
 </head>
 <body>
 
 <div class="top-container">
-    <header class="header-top">
-        <div class="logo-text">SnakBit</div>
-        <div class="header-info-text">
-            TAKENDRA BAM
-        </div>
-    </header>
+  <header class="header-top">
+    <div class="logo-text">SnakBit</div>
+    <div class="header-info-text">TAKENDRA BAM</div>
+  </header>
 
-    <div class="main-title-container">
-        <h1>Build.Code</h1>
-        <h1>Create.</h1>
-    </div>
+  <div class="main-title-container">
+    <h1>Build.Code</h1>
+    <h1>Create.</h1>
+  </div>
 </div>
 
 <div class="main-content-wrapper">
-    <nav class="content-nav">
-        <div class="logo">T</div>
-        <ul>
-            <li><a href="index.html">Home</a></li>
-            <li><a href="about">About</a></li>
-            <li><a href="projects">Projects</a></li>
-        </ul>
-        <a href="contact.html" class="contact-btn">Contact</a>
-    </nav>
-
-    <section class="hero-section">
-        <div class="hero-text">
-            <span class="hello">Hey there 👋</span>
-            <h2>
-                I'm <strong>Takendra Bam</strong><br>
-                Developer, Designer &<br>
-                Cybersecurity Enthusiast
-            </h2>
-            <p>
-                17 y/o self-taught developer from Nepal 🇳🇵<br>
-                Currently building <strong>..... secret</strong> — a Gen-Z style platform.<br>
-                I love clean UI, privacy-first systems, and spicy samosas 😎
-            </p>
-            <div class="hero-buttons">
-                <a href="https://github.com/TakendraBam432" class="btn primary">GitHub</a>
-                <a href="https://www.facebook.com/takendra.bam.846386" class="btn secondary">Facebook</a>
-            </div>
-        </div>
-
-        <div class="hero-image-container">
-            <div class="blue-blob blob-1"></div>
-            <img src="https://raw.githubusercontent.com/TakendraBam432/public-images/2661c7e098194ddb659574666e07045e74bd1abd/InShot_20251009_145559175.png" alt="Takendra Bam" style="position: relative; z-index: 10;">
-            
-            <span class="image-tag tag-web">Developer</span>
-            <span class="image-tag tag-uiux">Cybersecurity</span>
-        </div>
-    </section>
-
-    <div class="skills-bar">
-        <div class="skill-item">React & Node.js</div>
-        <div class="skill-item">PostgreSQL & APIs</div>
-        <div class="skill-item">UI/UX Design</div>
-        <div class="skill-item">Cybersecurity</div>
+  <nav class="content-nav">
+    <div class="logo">T</div>
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="projects.html">Projects</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <div class="menu-toggle" onclick="toggleMenu()">☰</div>
+    <div class="mobile-menu" id="mobileMenu">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="projects.html">Projects</a>
+      <a href="contact.html" class="contact-btn">Contact</a>
     </div>
+  </nav>
+
+  <section class="hero-section">
+    <div class="hero-text">
+      <span class="hello">Hey there 👋</span>
+      <h2>
+        I'm <strong>Takendra Bam</strong><br>
+        Developer, Designer &<br>
+        Cybersecurity Enthusiast
+      </h2>
+      <p>
+        17 y/o self-taught developer from Nepal 🇳🇵<br>
+        Currently building <strong>..... secret</strong> — a Gen-Z style platform.<br>
+        I love clean UI, privacy-first systems, and spicy samosas 😎
+      </p>
+      <div class="hero-buttons">
+        <a href="https://github.com/TakendraBam432" class="btn primary">GitHub</a>
+        <a href="https://www.facebook.com/takendra.bam.846386" class="btn secondary">Facebook</a>
+      </div>
+    </div>
+
+    <div class="hero-image-container">
+      <div class="blue-blob blob-1"></div>
+      <img src="https://raw.githubusercontent.com/TakendraBam432/public-images/2661c7e098194ddb659574666e07045e74bd1abd/InShot_20251009_145559175.png" alt="Takendra Bam">
+      <span class="image-tag tag-web">Developer</span>
+      <span class="image-tag tag-uiux">Cybersecurity</span>
+    </div>
+  </section>
+
+  <div class="skills-bar">
+    <div class="skill-item">React & Node.js</div>
+    <div class="skill-item">PostgreSQL & APIs</div>
+    <div class="skill-item">UI/UX Design</div>
+    <div class="skill-item">Cybersecurity</div>
+  </div>
 </div>
 
+<script>
+function toggleMenu() {
+  const menu = document.getElementById('mobileMenu');
+  menu.style.display = menu.style.display === 'flex' ? 'none' : 'flex';
+}
+</script>
 </body>
 </html>
