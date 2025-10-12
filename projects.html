@@ -3,41 +3,179 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Takendra Bam | Projects</title>
-<link rel="stylesheet" href="css/style.css">
+<title>Projects - Takendra Bam</title>
+<style>
+:root {
+  --primary-color: #007bff; /* Change color theme here */
+  --dark-color: #0056b3;
+  --text-dark: #333;
+  --text-light: #fff;
+  --max-width: 1200px;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Arial', sans-serif;
+}
+
+body {
+  background-color: #f7f9fc;
+  color: var(--text-dark);
+  line-height: 1.6;
+}
+
+header {
+  background-image: linear-gradient(to right top, #001f5c, #002d73, #003c8c, #004ba5, var(--primary-color));
+  color: var(--text-light);
+  padding: 25px 5%;
+  text-align: center;
+}
+
+header h1 {
+  font-size: 3em;
+  font-weight: 900;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  text-shadow: 2px 2px 5px rgba(0,0,0,0.2);
+}
+
+/* Back button styles */
+.back-button {
+  display: inline-block;
+  margin: 20px 0;
+  padding: 10px 20px;
+  background-color: var(--primary-color);
+  color: var(--text-light);
+  border-radius: 5px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: background-color 0.3s;
+}
+
+.back-button:hover {
+  background-color: var(--dark-color);
+}
+
+.main-content {
+  max-width: var(--max-width);
+  margin: 40px auto;
+  padding: 0 5%;
+}
+
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 25px;
+}
+
+.project-card {
+  background-color: #fff;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.project-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+}
+
+.project-card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  display: block;
+}
+
+.project-info {
+  padding: 20px;
+}
+
+.project-info h3 {
+  color: var(--primary-color);
+  font-size: 1.5em;
+  margin-bottom: 10px;
+}
+
+.project-info p {
+  font-size: 0.95em;
+  color: #555;
+  margin-bottom: 15px;
+}
+
+.project-info a {
+  text-decoration: none;
+  padding: 10px 20px;
+  background-color: var(--primary-color);
+  color: var(--text-light);
+  border-radius: 5px;
+  font-weight: bold;
+  transition: background-color 0.3s;
+}
+
+.project-info a:hover {
+  background-color: var(--dark-color);
+}
+
+.footer-note {
+  text-align: center;
+  margin-top: 40px;
+  font-size: 0.85em;
+  color: #555;
+}
+
+@media (max-width: 700px) {
+  header h1 {
+    font-size: 2.2em;
+  }
+}
+</style>
 </head>
 <body>
+
 <header>
-  <div class="logo">Takendra Bam</div>
-  <nav>
-    <a href="index.html">Home</a>
-    <a href="posts.html">Posts</a>
-    <a href="projects.html">Projects</a>
-    <a href="contact.html">Contact</a>
-  </nav>
+  <h1>My Projects</h1>
 </header>
 
-<main>
-  <section class="projects-section">
-    <h2>My Projects</h2>
-    <div class="projects-grid">
-      <div class="project-card">
-        <h3>TOPiN App</h3>
-        <p>Gen-Z social app with direct messaging, feeds, and AI features.</p>
-        <a href="https://github.com/TakendraBam432">View on GitHub</a>
+<main class="main-content">
+
+  <!-- Back button -->
+  <a href="index.html" class="back-button">Back to Portfolio</a>
+
+  <div class="projects-grid">
+
+    <!-- ===== Add your projects below ===== -->
+    <!-- Copy this entire <div class="project-card"> ... </div> block for each new project -->
+
+    <div class="project-card">
+      <img src="https://res.klook.com/images/fl_lossy.progressive,q_65/c_fill,w_2999,h_1687/w_80,x_15,y_15,g_south_west,l_Klook_water_br_trans_yhcmh3/activities/nabd3lsoifdkrmfifqrn/IMGWorldsofAdventureAdmissionTicketinDubai-Klook-KlookIndia.jpg" alt="Project Title">
+      <div class="project-info">
+        <h3>nothing to show here</h3>
+        <p>This is a short description about this project, what it does and your role.</p>
+        <a href="https://github.com/TakendraBam432" target="_blank">View Project</a>
       </div>
-      <div class="project-card">
-        <h3>Reelsversa</h3>
-        <p>Personal project for sharing video content efficiently.</p>
-        <a href="#">View on GitHub</a>
-      </div>
-      <!-- Add more project cards -->
     </div>
-  </section>
+
+    <div class="project-card">
+      <img src="https://res.klook.com/images/fl_lossy.progressive,q_65/c_fill,w_2999,h_1687/w_80,x_15,y_15,g_south_west,l_Klook_water_br_trans_yhcmh3/activities/nabd3lsoifdkrmfifqrn/IMGWorldsofAdventureAdmissionTicketinDubai-Klook-KlookIndia.jpg" alt="Project Title">
+      <div class="project-info">
+        <h3>nothing to show here</h3>
+        <p>A brief description of this project, features, technologies used, etc.</p>
+        <a href="https://github.com/TakendraBam432" target="_blank">View Project</a>
+      </div>
+    </div>
+
+    <!-- ===== End of project entries ===== -->
+
+  </div>
+
+  <div class="footer-note">
+    © 2025 Takendra Bam — Build. Code. Create.
+  </div>
 </main>
 
-<footer>
-  &copy; 2025 Takendra Bam
-</footer>
 </body>
 </html>
