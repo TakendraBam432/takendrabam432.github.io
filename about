@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About - Takendra Bam</title>
+  <style>
+    :root {
+      --primary: #0066ff;
+      --secondary: #00d4ff;
+      --bg: #f7f9fc;
+      --dark: #001f5c;
+      --light: #fff;
+      --text-dark: #222;
+      --max-width: 1200px;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Poppins", sans-serif;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text-dark);
+      overflow-x: hidden;
+    }
+
+    /* Header */
+    header {
+      background: linear-gradient(135deg, var(--dark), var(--primary));
+      color: var(--light);
+      text-align: center;
+      padding: 60px 10px;
+      position: relative;
+    }
+
+    header h1 {
+      font-size: 3em;
+      font-weight: 800;
+      letter-spacing: 2px;
+    }
+
+    /* Main Container */
+    .about-container {
+      max-width: var(--max-width);
+      margin: -40px auto 80px;
+      background: var(--light);
+      border-radius: 20px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+      padding: 60px 8%;
+      display: grid;
+      grid-template-columns: 1fr 1.5fr;
+      align-items: center;
+      gap: 40px;
+      transition: all 0.4s ease;
+    }
+
+    /* Profile Image */
+    .about-container img {
+      width: 100%;
+      max-width: 300px;
+      border-radius: 50%;
+      justify-self: center;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+    }
+
+    .about-container img:hover {
+      transform: scale(1.08);
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.25);
+    }
+
+    /* Info Section */
+    .about-info h2 {
+      font-size: 2em;
+      color: var(--dark);
+      margin-bottom: 15px;
+    }
+
+    .about-info p {
+      font-size: 1.05em;
+      line-height: 1.8;
+      color: #444;
+      margin-bottom: 25px;
+    }
+
+    /* Buttons */
+    .btn-group {
+      display: flex;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      text-decoration: none;
+      background: var(--primary);
+      color: var(--light);
+      padding: 10px 25px;
+      border-radius: 8px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+
+    .btn:hover {
+      background: var(--secondary);
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+    }
+
+    .back-btn {
+      background: transparent;
+      border: 2px solid var(--primary);
+      color: var(--primary);
+    }
+
+    .back-btn:hover {
+      background: var(--primary);
+      color: var(--light);
+    }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      .about-container {
+        grid-template-columns: 1fr;
+        text-align: center;
+        padding: 50px 7%;
+      }
+
+      .about-container img {
+        max-width: 220px;
+      }
+
+      .about-info h2 {
+        font-size: 1.8em;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>About Me</h1>
+  </header>
+
+  <section class="about-container">
+    <img src="https://raw.githubusercontent.com/TakendraBam432/public-images/2661c7e098194ddb659574666e07045e74bd1abd/InShot_20251009_145559175.png" alt="Takendra Bam" />
+    <div class="about-info">
+      <h2>Hey, I'm Takendra 👋</h2>
+      <p>
+        I'm a 17-year-old self-taught developer from Nepal 🇳🇵 — passionate about
+        building clean, secure, and meaningful digital experiences. I’m currently
+        developing <strong>TOPiN</strong> — a social media platform designed for Gen-Z,
+        focused on creativity, connection, and privacy.
+      </p>
+      <p>
+        I specialize in <strong>React, Node.js, and PostgreSQL</strong>, and I’m always
+        experimenting with design and animations to make interfaces feel alive.
+        When I’m not coding, playing with my dog Alpha 🐶,
+        or listening to music 🎧.
+      </p>
+      <div class="btn-group">
+        <a href="index.html" class="btn back-btn">Back Home</a>
+        <a href="https://github.com/TakendraBam432" class="btn" target="_blank">GitHub</a>
+      </div>
+    </div>
+  </section>
+</body>
+</html>
