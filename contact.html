@@ -1,83 +1,218 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Contact - Takendra Bam</title>
-  <link rel="icon" href="https://github.com/TakendraBam432.png" />
-  <style>
-    body {
-      font-family: 'Poppins', sans-serif;
-      background: #f7f9fc;
-      color: #222;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact - Takendra Bam</title>
+<style>
+:root {
+  --primary-color: #007bff; /* change this to update the color theme */
+  --dark-color: #0056b3;
+  --text-dark: #333;
+  --text-light: #fff;
+  --max-width: 1200px;
+}
 
-    .contact-container {
-      background: white;
-      padding: 50px;
-      border-radius: 10px;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-      width: 90%;
-      max-width: 600px;
-      text-align: center;
-    }
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Arial', sans-serif;
+}
 
-    h1 {
-      color: #007bff;
-      margin-bottom: 15px;
-    }
+body {
+  line-height: 1.6;
+  color: var(--text-dark);
+  background-color: #f7f9fc;
+}
 
-    p {
-      color: #555;
-      margin-bottom: 30px;
-    }
+header {
+  background-image: linear-gradient(to right top, #001f5c, #002d73, #003c8c, #004ba5, var(--primary-color));
+  color: var(--text-light);
+  padding: 25px 5%;
+  text-align: center;
+}
 
-    .social-links a {
-      display: inline-block;
-      margin: 10px;
-      text-decoration: none;
-      color: #007bff;
-      font-weight: bold;
-      transition: 0.3s;
-    }
+header h1 {
+  font-size: 3em;
+  font-weight: 900;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  text-shadow: 2px 2px 5px rgba(0,0,0,0.2);
+}
 
-    .social-links a:hover {
-      color: #0056b3;
-    }
+.main-content {
+  max-width: var(--max-width);
+  margin: 40px auto;
+  padding: 0 5%;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
 
-    .back {
-      display: inline-block;
-      margin-top: 30px;
-      text-decoration: none;
-      color: #333;
-      border: 2px solid #007bff;
-      padding: 10px 20px;
-      border-radius: 5px;
-      transition: 0.3s;
-    }
+.about-me {
+  background-color: #fff;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+}
 
-    .back:hover {
-      background: #007bff;
-      color: white;
-    }
-  </style>
+.about-me h2 {
+  font-size: 2em;
+  color: var(--primary-color);
+  margin-bottom: 15px;
+}
+
+.about-me p {
+  font-size: 1em;
+  color: #555;
+  line-height: 1.5;
+}
+
+.skills-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.skills-badges span {
+  display: inline-block;
+  padding: 5px 12px;
+  background-color: var(--primary-color);
+  color: var(--text-light);
+  border-radius: 20px;
+  font-weight: bold;
+  font-size: 0.85em;
+  transition: all 0.3s;
+}
+
+.skills-badges span:hover {
+  background-color: var(--dark-color);
+  cursor: default;
+}
+
+.contact-info {
+  background-color: #fff;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+  text-align: center;
+}
+
+.contact-info h2 {
+  font-size: 2em;
+  margin-bottom: 15px;
+  color: var(--primary-color);
+}
+
+.contact-info p {
+  font-size: 1em;
+  color: #555;
+  margin-bottom: 25px;
+}
+
+.contact-info a {
+  text-decoration: none;
+  color: var(--text-light);
+}
+
+.contact-info .email-btn {
+  display: inline-block;
+  padding: 12px 25px;
+  border-radius: 5px;
+  background-color: var(--primary-color);
+  color: var(--text-light);
+  font-weight: bold;
+  transition: background-color 0.3s;
+}
+
+.contact-info .email-btn:hover {
+  background-color: var(--dark-color);
+}
+
+.social-links {
+  margin-top: 25px;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.social-links a {
+  display: inline-block;
+  padding: 10px 15px;
+  background-color: var(--primary-color);
+  color: var(--text-light);
+  border-radius: 5px;
+  font-weight: bold;
+  transition: background-color 0.3s;
+}
+
+.social-links a:hover {
+  background-color: var(--dark-color);
+}
+
+.footer-note {
+  text-align: center;
+  font-size: 0.85em;
+  color: #555;
+  margin-top: 10px;
+}
+
+@media (max-width: 700px) {
+  header h1 {
+    font-size: 2.2em;
+  }
+
+  .skills-badges {
+    justify-content: center;
+  }
+}
+</style>
 </head>
 <body>
-  <div class="contact-container">
-    <h1>Contact Me</h1>
-    <p>Let’s connect! You can reach me anytime on these platforms:</p>
+
+<header>
+  <h1>Contact Me</h1>
+</header>
+
+<main class="main-content">
+
+  <div class="about-me">
+    <h2>Hey, I'm Takendra Bam!</h2>
+    <p>
+      I’m a 17 y/o self-taught developer from Nepal 🇳🇵. I love building Gen-Z style platforms, designing clean user interfaces, exploring cybersecurity, and yes… enjoying some spicy samosas 😎.<br>
+      Currently, I’m working on creating apps that combine fun, privacy, and community-driven experiences.  
+      Feel free to reach out if you want to collaborate, talk tech, or just share some memes!
+    </p>
+
+    <div class="skills-badges">
+      <span>React</span>
+      <span>Node.js</span>
+      <span>PostgreSQL</span>
+      <span>UI/UX Design</span>
+      <span>Cybersecurity</span>
+    </div>
+  </div>
+
+  <div class="contact-info">
+    <h2>Get in Touch</h2>
+    <p>Shoot me an email or connect via social media. I love chatting with fellow devs and creatives!</p>
+    
 
     <div class="social-links">
-      <a href="mailto:takendrabam@example.com">📧 Email</a>
-      <a href="https://github.com/TakendraBam432" target="_blank">💻 GitHub</a>
-      <a href="https://www.facebook.com/takendra.bam.846386" target="_blank">📘 Facebook</a>
+      <a href="index.html" class="btn back-btn">Back Home</a>
+      <a href="mailto:info@takendrabam.com.np" class="email-btn">Email Me</a>
+      <a href="https://github.com/TakendraBam432" target="_blank">GitHub</a>
+      <a href="https://www.facebook.com/takendra.bam.846386" target="_blank">Facebook</a>
     </div>
-
-    <a href="index.html" class="back">← Back to Home</a>
   </div>
+
+  <div class="footer-note">
+    © 2025 Takendra Bam — Building Code, Spicy Samosas & Fun 😎
+  </div>
+</main>
+
 </body>
 </html>
+
