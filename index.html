@@ -4,29 +4,22 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Takendra Bam - Personal Portfolio</title>
-<!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
     <meta property="og:title" content="Takendra Bam - Personal Portfolio" />
     <meta property="og:description" content="Build.Code.Create..." />
     <meta property="og:image" content="https://raw.githubusercontent.com/TakendraBam432/public-images/2661c7e098194ddb659574666e07045e74bd1abd/InShot_20251009_145559175.png" />
     <meta property="og:url" content="https://takendrabam.com.np" />
-
-    <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Takendra Bam - Personal Portfolio" />
     <meta name="twitter:description" content="Build.Code.Create..." />
     <meta name="twitter:image" content="https://raw.githubusercontent.com/TakendraBam432/public-images/2661c7e098194ddb659574666e07045e74bd1abd/InShot_20251009_145559175.png" />
-
-    <!-- Favicon -->
     <link rel="icon" href="https://raw.githubusercontent.com/TakendraBam432/public-images/2661c7e098194ddb659574666e07045e74bd1abd/InShot_20251009_145559175.png" type="image/png" />
 
   
 <style>
-/* ========================== */
-/* CHANGE COLORS HERE IF NEEDED */
-/* ========================== */
+    
 :root {
-  --primary-color: #007bff; /* Change this color to affect whole layout */
+  --primary-color: #007bff; 
   --dark-color: #0056b3;
   --deep-color: #001f5c;
   --text-dark: #333;
@@ -188,12 +181,10 @@ body {
   color: var(--text-light);
 }
 
-/* Hide desktop contact button */
 .contact-btn {
   display: none;
 }
 
-/* Hero section */
 .hero-section {
   display: flex;
   justify-content: space-between;
@@ -324,7 +315,6 @@ body {
   background-color: #000;
 }
 
-/* Skills bar */
 .skills-bar {
   background-color: #222;
   color: var(--text-light);
@@ -351,9 +341,6 @@ body {
   color: var(--primary-color);
 }
 
-/* ========================== */
-/* RESPONSIVE FIXES */
-/* ========================== */
 @media (max-width: 900px) {
   .hero-section {
     flex-direction: column;
@@ -363,10 +350,9 @@ body {
   .hero-text {
     max-width: 100%;
     margin-bottom: 30px;
-    text-align: left; /* <-- LEFT ALIGN HERO TEXT ON SMALL DEVICES */
+    text-align: left; 
   }
 
-  /* FIXED HERO IMAGE ON SMALL DEVICES */
   .hero-image-container {
     max-width: 100%;
     height: auto;
@@ -374,11 +360,11 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    flex-shrink: 0; /* prevents squishing */
+    flex-shrink: 0;
   }
 
   .hero-image-container img {
-    width: 100%; /* responsive full width */
+    width: 100%; 
     height: auto;
     border-radius: 5px;
     object-fit: cover;
