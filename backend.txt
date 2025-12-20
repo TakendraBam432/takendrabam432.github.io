@@ -1,6 +1,6 @@
 # Backend Architecture
 
-> A domain-driven backend design for TOPiN social media application.
+> A domain-driven backend design for social media application.
 > Backend acts as an orchestrator/API layer — business logic lives in PostgreSQL SQL functions.
 
 ---
