@@ -1,0 +1,624 @@
+# TOPiN Backend Architecture
+
+> A domain-driven backend design for TOPiN social media application.
+> Backend acts as an orchestrator/API layer — business logic lives in PostgreSQL SQL functions.
+
+---
+
+## Architecture Philosophy
+
+This backend follows a **thin orchestration layer** approach:
+
+1. **Database is the source of truth** — SQL functions (`can_see_post`, `are_mutual_followers`, `deduct_sponsor_credits`) contain business logic
+2. **Backend orchestrates, not duplicates** — Services call SQL functions, not reimplement their logic
+3. **Domain separation** — Each service owns its tables completely
+4. **Polyglot architecture** — Rust for performance-critical services, Go for authentication (GoTrue-compatible)
+5. **Security at every layer** — JWT validation, RLS policies, input validation, rate limiting
+
+---
+
+## Table of Contents
+
+1. [Backend Domains](#backend-domains)
+2. [Rust/Go Folder Structure](#rustgo-folder-structure)
+3. [Folder Responsibilities](#folder-responsibilities)
+4. [Domain Details](#domain-details)
+5. [Scaling & Deployment](#scaling--deployment)
+6. [Security Considerations](#security-considerations)
+7. [API Reference](#api-endpoint-reference)
+
+---
+
+## Backend Domains
+
+| Domain | Tables Owned | SQL Functions Used | Responsibilities |
+|--------|-------------|-------------------|------------------|
+| **auth** | `user_sessions` | GoTrue native | Authentication, JWT, sessions |
+| **profiles** | `profiles`, `profile_details`, `profile_likes` | `can_view_profile`, `can_view_active_status`, `increment_profile_likes` | User identity, profile CRUD |
+| **social** | `followers`, `blocked_users` | `are_mutual_followers`, `is_user_blocked`, `get_follower_count` | Following, blocking, relationships |
+| **posts** | `posts`, `reposts`, `post_views` | `can_see_post`, `get_visible_posts_for_user`, `increment_post_views` | Content CRUD, feed, visibility |
+| **engagement** | `likes`, `comments`, `post_like_logs` | `increment_post_likes`, `check_mutual_likes` | Likes, comments, reposts |
+| **messaging** | `messages`, `conversation_participants` | `can_message_user`, `generate_conversation_id`, `delete_expired_messages` | DMs, encryption, expiration |
+| **notifications** | `notifications` | — | Push/in-app notifications |
+| **moderation** | `post_reports`, `user_cheat_status` | `check_user_cheat_status`, `check_and_demonetize_video` | Reports, fraud detection |
+| **analytics** | `post_view_logs`, `user_analytics` | — | View/like tracking, metrics |
+| **monetization** | `video_revenue`, `withdrawal_info`, `withdrawal_requests` | `calculate_monthly_revenue` | Revenue, payouts |
+| **sponsorship** | `sponsored_posts`, `sponsor_credits`, `sponsor_credit_transactions` | `add_sponsor_credits`, `deduct_sponsor_credits` | Sponsored content, credits |
+| **settings** | `user_settings` | `is_handle_available` | User preferences, privacy |
+
+---
+
+## Rust/Go Folder Structure
+
+```
+backend/
+├── cmd/                                    # Application entrypoints
+│   ├── api/                                # Main HTTP API (Rust)
+│   │   ├── main.rs
+│   │   └── Cargo.toml
+│   │
+│   ├── auth/                               # GoTrue auth service (Go)
+│   │   ├── main.go
+│   │   ├── go.mod
+│   │   └── go.sum
+│   │
+│   ├── realtime/                           # WebSocket service (Rust)
+│   │   ├── main.rs
+│   │   └── Cargo.toml
+│   │
+│   └── worker/                             # Background jobs (Rust)
+│       ├── main.rs
+│       └── Cargo.toml
+│
+├── crates/                                 # Rust workspace crates
+│   ├── core/                               # Shared types, utilities
+│   │   ├── src/
+│   │   │   ├── lib.rs
+│   │   │   ├── config.rs                   # Environment config
+│   │   │   ├── db.rs                       # PostgreSQL pool
+│   │   │   ├── error.rs                    # Error types
+│   │   │   └── types/
+│   │   │       ├── mod.rs
+│   │   │       ├── auth.rs
+│   │   │       ├── pagination.rs
+│   │   │       └── response.rs
+│   │   └── Cargo.toml
+│   │
+│   ├── middleware/                         # HTTP middleware
+│   │   ├── src/
+│   │   │   ├── lib.rs
+│   │   │   ├── auth.rs                     # JWT validation
+│   │   │   ├── rate_limit.rs
+│   │   │   ├── cors.rs
+│   │   │   ├── logging.rs
+│   │   │   └── blocking.rs                 # User blocking checks
+│   │   └── Cargo.toml
+│   │
+│   ├── services/                           # Domain services
+│   │   ├── src/
+│   │   │   ├── lib.rs
+│   │   │   ├── profiles/
+│   │   │   │   ├── mod.rs
+│   │   │   │   ├── repository.rs           # DB queries
+│   │   │   │   ├── handler.rs              # HTTP handlers
+│   │   │   │   └── types.rs                # DTOs
+│   │   │   │
+│   │   │   ├── social/
+│   │   │   │   ├── mod.rs
+│   │   │   │   ├── followers.rs
+│   │   │   │   ├── blocking.rs
+│   │   │   │   └── handler.rs
+│   │   │   │
+│   │   │   ├── posts/
+│   │   │   │   ├── mod.rs
+│   │   │   │   ├── repository.rs
+│   │   │   │   ├── feed.rs                 # Calls get_visible_posts_for_user
+│   │   │   │   ├── engagement.rs           # Likes, reposts
+│   │   │   │   └── handler.rs
+│   │   │   │
+│   │   │   ├── messaging/
+│   │   │   │   ├── mod.rs
+│   │   │   │   ├── repository.rs
+│   │   │   │   ├── encryption.rs
+│   │   │   │   ├── conversations.rs
+│   │   │   │   └── handler.rs
+│   │   │   │
+│   │   │   ├── notifications/
+│   │   │   │   ├── mod.rs
+│   │   │   │   ├── repository.rs
+│   │   │   │   ├── dispatcher.rs           # Push notification delivery
+│   │   │   │   └── handler.rs
+│   │   │   │
+│   │   │   ├── moderation/
+│   │   │   │   ├── mod.rs
+│   │   │   │   ├── reports.rs
+│   │   │   │   ├── fraud.rs                # Calls check_user_cheat_status
+│   │   │   │   └── handler.rs
+│   │   │   │
+│   │   │   ├── analytics/
+│   │   │   │   ├── mod.rs
+│   │   │   │   ├── tracking.rs             # View/like ingestion
+│   │   │   │   └── handler.rs
+│   │   │   │
+│   │   │   ├── monetization/
+│   │   │   │   ├── mod.rs
+│   │   │   │   ├── revenue.rs              # Calls calculate_monthly_revenue
+│   │   │   │   ├── withdrawals.rs
+│   │   │   │   └── handler.rs
+│   │   │   │
+│   │   │   ├── sponsorship/
+│   │   │   │   ├── mod.rs
+│   │   │   │   ├── credits.rs              # Calls add/deduct_sponsor_credits
+│   │   │   │   ├── campaigns.rs
+│   │   │   │   └── handler.rs
+│   │   │   │
+│   │   │   └── settings/
+│   │   │       ├── mod.rs
+│   │   │       ├── repository.rs
+│   │   │       └── handler.rs
+│   │   │
+│   │   └── Cargo.toml
+│   │
+│   └── realtime/                           # Realtime-specific logic
+│       ├── src/
+│       │   ├── lib.rs
+│       │   ├── channels.rs                 # Subscription management
+│       │   ├── presence.rs                 # Online status
+│       │   └── handlers/
+│       │       ├── mod.rs
+│       │       ├── chat.rs
+│       │       └── notifications.rs
+│       └── Cargo.toml
+│
+├── auth_go/                                # Go authentication service
+│   ├── cmd/
+│   │   └── server/
+│   │       └── main.go
+│   ├── internal/
+│   │   ├── config/
+│   │   │   └── config.go
+│   │   ├── handlers/
+│   │   │   ├── login.go
+│   │   │   ├── signup.go
+│   │   │   ├── refresh.go
+│   │   │   ├── password_reset.go
+│   │   │   └── otp.go
+│   │   ├── middleware/
+│   │   │   └── jwt.go
+│   │   ├── models/
+│   │   │   └── user.go
+│   │   └── database/
+│   │       └── postgres.go
+│   ├── go.mod
+│   └── go.sum
+│
+├── jobs/                                   # Background job definitions
+│   ├── src/
+│   │   ├── lib.rs
+│   │   ├── scheduler.rs
+│   │   ├── queue.rs
+│   │   └── tasks/
+│   │       ├── mod.rs
+│   │       ├── calculate_revenue.rs        # Monthly job
+│   │       ├── cleanup_messages.rs         # Hourly: delete_expired_messages
+│   │       ├── cheat_detection.rs          # Daily: update_user_cheat_status
+│   │       └── cache_sync.rs               # 5-min: Redis → PostgreSQL
+│   └── Cargo.toml
+│
+├── storage/                                # S3-compatible storage
+│   ├── src/
+│   │   ├── lib.rs
+│   │   ├── s3.rs
+│   │   └── upload.rs
+│   └── Cargo.toml
+│
+├── external/                               # External integrations
+│   ├── src/
+│   │   ├── lib.rs
+│   │   ├── push.rs                         # FCM/APNs
+│   │   └── email.rs
+│   └── Cargo.toml
+│
+├── migrations/                             # SQL migrations (reference)
+│   └── README.md                           # Note: migrations live in Supabase
+│
+├── Cargo.toml                              # Rust workspace manifest
+├── Cargo.lock
+├── rust-toolchain.toml
+└── README.md
+```
+
+---
+
+## Folder Responsibilities
+
+### `cmd/` — Application Entrypoints
+**Owns:** Process startup, signal handling, graceful shutdown  
+**Does NOT own:** Business logic
+
+| Service | Language | Port | Purpose |
+|---------|----------|------|---------|
+| `api` | Rust | 8080 | Main HTTP API |
+| `auth` | Go | 9000 | GoTrue-compatible auth |
+| `realtime` | Rust | 8081 | WebSocket connections |
+| `worker` | Rust | — | Background job processor |
+
+### `crates/core/` — Shared Foundation
+**Owns:** Types, config, database pool, error handling  
+**Does NOT own:** Business logic, HTTP handlers
+
+### `crates/middleware/` — Cross-Cutting Concerns
+**Owns:** Request/response processing pipeline  
+**Does NOT own:** Business logic
+
+| Middleware | Purpose |
+|------------|---------|
+| `auth.rs` | JWT validation, user extraction |
+| `rate_limit.rs` | Request throttling |
+| `blocking.rs` | Check `blocked_users` table |
+| `cors.rs` | CORS headers |
+| `logging.rs` | Request logging |
+
+### `crates/services/` — Domain Services
+**Owns:** Domain-specific orchestration  
+**Does NOT own:** SQL business logic (that's in PostgreSQL functions)
+
+Each service contains:
+- `mod.rs` — Module exports
+- `repository.rs` — Data access (calls SQL functions via `sqlx::query!`)
+- `handler.rs` — HTTP route handlers
+- `types.rs` — Domain DTOs
+
+**Critical Pattern:**
+```rust
+// ✅ CORRECT: Call SQL function
+let can_view = sqlx::query_scalar!(
+    "SELECT can_view_profile($1, $2)",
+    viewer_id, target_id
+).fetch_one(&pool).await?;
+
+// ❌ WRONG: Reimplement logic
+let can_view = check_privacy_settings_manually(&pool, viewer_id, target_id);
+```
+
+### `auth_go/` — Go Authentication Service
+**Owns:** User authentication, JWT issuance  
+**Does NOT own:** Authorization (that's RLS policies)
+
+GoTrue-compatible endpoints:
+- `POST /signup` — Create account
+- `POST /token?grant_type=password` — Login
+- `POST /token?grant_type=refresh_token` — Refresh
+- `POST /recover` — Password reset
+
+### `jobs/` — Background Tasks
+**Owns:** Scheduled job execution  
+**Does NOT own:** Business logic (calls SQL functions)
+
+| Job | Schedule | SQL Function Called |
+|-----|----------|---------------------|
+| `calculate_revenue` | Monthly 1st | `calculate_monthly_revenue()` |
+| `cleanup_messages` | Hourly | `delete_expired_messages()` |
+| `cheat_detection` | Daily | `update_user_cheat_status()` for all users |
+| `cache_sync` | 5 min | Custom Redis → PostgreSQL sync |
+
+### `storage/` — File Storage
+**Owns:** S3-compatible object storage  
+**Does NOT own:** File processing (use external service)
+
+### `external/` — Third-Party Integrations
+**Owns:** External API calls  
+**Does NOT own:** When to call (that's domain services)
+
+---
+
+## Domain Details
+
+### Auth Domain (Go)
+**Tables:** `user_sessions`  
+**SQL Functions:** GoTrue handles auth natively  
+**Responsibilities:**
+- Email/password authentication
+- JWT token issuance and refresh
+- Password reset flow
+- OTP verification
+- Session management
+
+### Profiles Domain
+**Tables:** `profiles`, `profile_details`, `profile_likes`, `profile_like_logs`  
+**SQL Functions:** `can_view_profile()`, `can_view_active_status()`, `increment_profile_likes()`, `is_handle_available()`  
+**Responsibilities:**
+- Profile CRUD
+- Avatar upload
+- Handle uniqueness
+- Blue tick requests
+- Online status
+
+### Social Domain
+**Tables:** `followers`, `blocked_users`  
+**SQL Functions:** `are_mutual_followers()`, `is_user_blocked()`, `get_follower_count()`, `get_followers_with_profiles()`  
+**Responsibilities:**
+- Follow/unfollow
+- Block/unblock
+- Mutual friend detection
+- Follower lists
+
+### Posts Domain
+**Tables:** `posts`, `reposts`, `post_views`, `post_view_logs`  
+**SQL Functions:** `can_see_post()`, `get_visible_posts_for_user()`, `increment_post_views()`  
+**Responsibilities:**
+- Post CRUD with audience setting
+- Feed generation (cursor pagination)
+- Repost management
+- View tracking (IP deduplication)
+
+### Engagement Domain
+**Tables:** `likes`, `comments`, `post_like_logs`  
+**SQL Functions:** `increment_post_likes()`, `check_mutual_likes()`  
+**Responsibilities:**
+- Like/unlike posts
+- Comment CRUD with mentions
+- Engagement tracking for feed ranking
+
+### Messaging Domain
+**Tables:** `messages`, `conversation_participants`  
+**SQL Functions:** `can_message_user()`, `generate_conversation_id()`, `delete_expired_messages()`  
+**Responsibilities:**
+- Encrypted message send/receive
+- Conversation management
+- Read receipts
+- 24h expiration after read
+
+### Notifications Domain
+**Tables:** `notifications`  
+**Responsibilities:**
+- Create notifications on events
+- Mark as read
+- Realtime delivery
+- Push notification dispatch
+
+### Moderation Domain
+**Tables:** `post_reports`, `user_cheat_status`  
+**SQL Functions:** `check_user_cheat_status()`, `update_user_cheat_status()`, `check_and_demonetize_video()`, `check_and_demonetize_account()`, `get_post_report_count()`  
+**Responsibilities:**
+- Report submission
+- Auto-demonetize at 10 reports
+- Fraud detection
+- Cheat status updates
+
+### Analytics Domain
+**Tables:** `post_view_logs`, `post_like_logs`, `user_analytics`  
+**Responsibilities:**
+- Event ingestion (views, likes)
+- Metrics aggregation
+- Dashboard data
+
+### Monetization Domain
+**Tables:** `video_revenue`, `user_videos`, `withdrawal_info`, `withdrawal_requests`, `user_analytics`  
+**SQL Functions:** `calculate_monthly_revenue()`  
+**Responsibilities:**
+- Revenue calculation: `(likes × 0.001) + (views × 0.0001)`
+- Eligibility checks (30 days, 5K profile likes, 10K post likes, 20 posts)
+- Withdrawal requests
+
+### Sponsorship Domain
+**Tables:** `sponsor_credits`, `sponsor_credit_transactions`, `sponsored_posts`, `sponsored_interactions`  
+**SQL Functions:** `get_or_create_sponsor_credits()`, `add_sponsor_credits()`, `deduct_sponsor_credits()`  
+**Responsibilities:**
+- Credit balance (atomic operations)
+- Sponsored post creation with targeting
+- Impression/like tracking
+- Transaction audit trail
+
+### Settings Domain
+**Tables:** `user_settings`  
+**SQL Functions:** `can_view_profile()`, `can_view_active_status()`  
+**Responsibilities:**
+- Privacy settings
+- Notification preferences
+- Accessibility settings
+- Content creator flag
+
+---
+
+## Scaling & Deployment
+
+### Horizontal Scaling
+| Service | Scaling Strategy |
+|---------|-----------------|
+| `api` | Stateless, scale via load balancer |
+| `auth` | Stateless, scale independently |
+| `realtime` | Sticky sessions for WebSocket |
+| `worker` | Multiple instances with queue partitioning |
+
+### Database Scaling
+- **Read replicas** for GET endpoints
+- **Connection pooling** via PgBouncer
+- **Materialized views** for analytics dashboards
+
+### Service Isolation
+```
+┌─────────────────┐     ┌─────────────────┐
+│   Load Balancer │     │   WebSocket LB  │
+└────────┬────────┘     └────────┬────────┘
+         │                       │
+    ┌────┴────┐             ┌────┴────┐
+    │ API (N) │             │Realtime │
+    └────┬────┘             └────┬────┘
+         │                       │
+    ┌────┴────┐             ┌────┴────┐
+    │Auth (Go)│             │ Worker  │
+    └────┬────┘             └────┬────┘
+         │                       │
+         └───────────┬───────────┘
+                     │
+              ┌──────┴──────┐
+              │  PostgreSQL │
+              │  + Replicas │
+              └─────────────┘
+```
+
+---
+
+## Security Considerations
+
+1. **RLS Policies Active** — All queries go through Supabase RLS
+2. **JWT Validation** — Every request validated in middleware
+3. **Rate Limiting** — Per-endpoint limits (10/min for sensitive)
+4. **Idempotency** — Credit transactions require idempotency keys
+5. **Blocking Middleware** — Block check before any interaction
+6. **Input Validation** — Zod-style validation in Rust (validator crate)
+7. **Encryption** — Messages encrypted at rest (crypto-js compatible)
+
+### Key Business Rules (Enforced by SQL)
+| Rule | SQL Function |
+|------|-------------|
+| Post visibility | `can_see_post()` |
+| Message permissions | `can_message_user()` |
+| Cheat detection | `check_user_cheat_status()` |
+| Auto-demonetization | `check_and_demonetize_video()` |
+| Message expiration | `delete_expired_messages()` |
+
+---
+
+## Edge Functions to Migrate
+
+| Supabase Function | Target Location | Notes |
+|-------------------|-----------------|-------|
+| `calculate-revenue` | `jobs/tasks/calculate_revenue.rs` | Monthly scheduled job |
+| `check-existing-repost` | `crates/services/posts/engagement.rs` | Part of repost handler |
+| `send-notification` | `crates/services/notifications/dispatcher.rs` | Push delivery |
+| `sponsor-credits` | `crates/services/sponsorship/credits.rs` | Credit operations |
+| `sync-redis-to-postgres` | `jobs/tasks/cache_sync.rs` | Cache sync job |
+| `track-like` | `crates/services/analytics/tracking.rs` | Event ingestion |
+| `track-view` | `crates/services/analytics/tracking.rs` | Event ingestion |
+
+---
+
+## API Endpoint Reference
+
+### Auth (`/api/auth`) — Go Service
+```
+POST   /signup              # Create account
+POST   /token               # Login (grant_type=password)
+POST   /token               # Refresh (grant_type=refresh_token)
+POST   /recover             # Password reset request
+POST   /verify              # OTP verification
+DELETE /logout              # Session termination
+```
+
+### Users (`/api/users`)
+```
+GET    /me                  # Current user profile
+GET    /:id                 # Get user by ID
+PUT    /me                  # Update profile
+PUT    /me/avatar           # Update avatar
+PUT    /me/handle           # Update handle
+GET    /check-handle/:h     # Check availability
+```
+
+### Social (`/api/social`)
+```
+POST   /follow/:userId      # Follow user
+DELETE /follow/:userId      # Unfollow
+GET    /followers/:userId   # Get followers
+GET    /following/:userId   # Get following
+POST   /block/:userId       # Block user
+DELETE /block/:userId       # Unblock
+GET    /blocked             # Get blocked list
+```
+
+### Posts (`/api/posts`)
+```
+GET    /                    # Feed (cursor pagination)
+GET    /:id                 # Get post
+POST   /                    # Create post
+PUT    /:id                 # Update post
+DELETE /:id                 # Delete post
+GET    /user/:userId        # User's posts
+POST   /:id/repost          # Repost
+DELETE /:id/repost          # Undo repost
+```
+
+### Engagement (`/api/engagement`)
+```
+POST   /like/:contentId     # Like
+DELETE /like/:contentId     # Unlike
+GET    /likes/:contentId    # Get likers
+POST   /comment/:postId     # Add comment
+PUT    /comment/:id         # Update comment
+DELETE /comment/:id         # Delete comment
+GET    /comments/:postId    # Get comments
+```
+
+### Messaging (`/api/messages`)
+```
+GET    /conversations       # List conversations
+GET    /conversation/:id    # Get messages
+POST   /send                # Send message
+PUT    /:id/read            # Mark as read
+DELETE /:id                 # Delete message
+```
+
+### Notifications (`/api/notifications`)
+```
+GET    /                    # Get notifications
+PUT    /:id/read            # Mark as read
+PUT    /read-all            # Mark all as read
+DELETE /:id                 # Delete
+```
+
+### Search (`/api/search`)
+```
+GET    /users?q=            # Search users
+GET    /posts?q=            # Search posts
+GET    /mentions?q=         # Mention suggestions
+```
+
+### Monetization (`/api/monetization`)
+```
+GET    /status              # Eligibility
+GET    /revenue             # Revenue analytics
+GET    /videos              # Video performance
+POST   /withdrawal          # Request withdrawal
+GET    /withdrawals         # Withdrawal history
+```
+
+### Sponsorship (`/api/sponsorship`)
+```
+GET    /credits             # Credit balance
+POST   /credits/add         # Add credits
+POST   /posts               # Create sponsored post
+GET    /posts               # My sponsored posts
+GET    /posts/:id/stats     # Post analytics
+```
+
+### Moderation (`/api/moderation`)
+```
+POST   /report/:postId      # Report post
+```
+
+### Settings (`/api/settings`)
+```
+GET    /                    # Get all settings
+PUT    /privacy             # Privacy settings
+PUT    /notifications       # Notification prefs
+PUT    /accessibility       # Accessibility
+```
+
+---
+
+## Summary
+
+This architecture:
+- ✅ Respects existing SQL business logic (no duplication)
+- ✅ Clean domain separation with Rust crates
+- ✅ Go-based auth service (GoTrue-compatible)
+- ✅ Horizontal scaling for each service
+- ✅ Background job support with scheduled tasks
+- ✅ Security at every layer (JWT, RLS, rate limiting)
+- ✅ Optimized for long-term maintainability
+
+---
+
+*Last updated: 2025-12-20*
