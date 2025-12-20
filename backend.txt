@@ -1,4 +1,4 @@
-# TOPiN Backend Architecture
+# Backend Architecture
 
 > A domain-driven backend design for TOPiN social media application.
 > Backend acts as an orchestrator/API layer — business logic lives in PostgreSQL SQL functions.
@@ -439,30 +439,30 @@ GoTrue-compatible endpoints:
 ### Service Isolation
 ```
 ┌─────────────────┐     ┌─────────────────┐
-│   Load Balancer │     │   WebSocket LB  │
+│   Load Balancer    │     │   WebSocket LB      │
 └────────┬────────┘     └────────┬────────┘
-         │                       │
-    ┌────┴────┐             ┌────┴────┐
-    │ API (N) │             │Realtime │
-    └────┬────┘             └────┬────┘
-         │                       │
-    ┌────┴────┐             ┌────┴────┐
-    │Auth (Go)│             │ Worker  │
-    └────┬────┘             └────┬────┘
-         │                       │
+          │                           │
+    ┌────┴────┐               ┌────┴────┐
+    │ API (N)   │               │Realtime   │
+    └────┬────┘               └────┬────┘
+          │                           │
+    ┌────┴────┐               ┌────┴────┐
+    │Auth (Go)  │               │ Worker    │
+    └────┬────┘               └────┬────┘
+          │                           │
          └───────────┬───────────┘
-                     │
-              ┌──────┴──────┐
-              │  PostgreSQL │
-              │  + Replicas │
-              └─────────────┘
+                       │
+               ┌──────┴──────┐
+               │  PostgreSQL   │
+               │  + Replicas   │
+               └─────────────┘
 ```
 
 ---
 
 ## Security Considerations
 
-1. **RLS Policies Active** — All queries go through Supabase RLS
+1. **RLS Policies Active** — All queries go through db RLS
 2. **JWT Validation** — Every request validated in middleware
 3. **Rate Limiting** — Per-endpoint limits (10/min for sensitive)
 4. **Idempotency** — Credit transactions require idempotency keys
