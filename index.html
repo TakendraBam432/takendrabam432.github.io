@@ -4,17 +4,13 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Takendra Bam - Personal Portfolio</title>
-    <meta property="og:type" content="website" />
-    <meta property="og:title" content="Takendra Bam - Personal Portfolio" />
-    <meta property="og:description" content="Build.Code.Create..." />
-    <meta property="og:image" content="https://raw.githubusercontent.com/TakendraBam432/public-images/2661c7e098194ddb659574666e07045e74bd1abd/InShot_20251009_145559175.png" />
-    <meta property="og:url" content="https://www.takendrabam.com.np" />
-    <link rel="icon" href="https://raw.githubusercontent.com/TakendraBam432/public-images/2661c7e098194ddb659574666e07045e74bd1abd/InShot_20251009_145559175.png" type="image/png" />
-
-</head>
-<body>  
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Takendra Bam - Personal Portfolio" />
+<meta property="og:description" content="Build.Code.Create..." />
+<meta property="og:image" content="https://raw.githubusercontent.com/TakendraBam432/public-images/2661c7e098194ddb659574666e07045e74bd1abd/InShot_20251009_145559175.png" />
+<meta property="og:url" content="https://www.takendrabam.com.np" />
+<link rel="icon" href="https://raw.githubusercontent.com/TakendraBam432/public-images/2661c7e098194ddb659574666e07045e74bd1abd/InShot_20251009_145559175.png" type="image/png" />
 <style>
-    
 :root {
   --primary-color: #007bff; 
   --dark-color: #0056b3;
@@ -23,372 +19,107 @@
   --text-light: #fff;
   --max-width: 1300px;
 }
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Arial', sans-serif; }
+body { line-height: 1.6; color: var(--text-dark); background-color: #f7f9fc; }
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: 'Arial', sans-serif;
+/* Header */
+.top-container { background-image: linear-gradient(to right top, var(--deep-color), #002d73, #003c8c, #004ba5, var(--primary-color)); color: var(--text-light); padding-bottom: 100px; position: relative; z-index: 1; }
+.header-top { display: flex; justify-content: space-between; align-items: center; padding: 15px 5%; max-width: var(--max-width); margin: 0 auto; }
+.logo-text { font-size: 1.2em; font-weight: bold; color: var(--text-light); }
+.header-info-text { font-size: 0.9em; opacity: 0.8; text-align: right; }
+.main-title-container { text-align: center; padding: 60px 5% 0; max-width: 900px; margin: 0 auto; }
+.main-title-container h1 { font-size: 6vw; font-weight: 900; letter-spacing: 5px; color: rgba(255,255,255,0.9); text-shadow: 2px 2px 5px rgba(0,0,0,0.2); }
+
+/* Nav */
+.content-nav { display: flex; justify-content: center; align-items: center; padding: 25px 5%; border-bottom: 1px solid #eee; position: relative; }
+.content-nav .logo { position: absolute; left: 5%; width: 30px; height: 30px; background-color: var(--primary-color); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 0.8em; font-weight: bold; }
+.content-nav ul { list-style: none; display: flex; gap: 25px; }
+.content-nav a { text-decoration: none; color: var(--text-dark); font-size: 0.9em; font-weight: 500; transition: color 0.3s; }
+.content-nav a:hover { color: var(--primary-color); }
+.menu-toggle { position: absolute; right: 5%; font-size: 1.8em; cursor: pointer; color: var(--text-dark); display: none; }
+.mobile-menu { display: none; flex-direction: column; background-color: white; position: absolute; top: 60px; right: 5%; width: 200px; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); overflow: hidden; }
+.mobile-menu a { padding: 12px; text-decoration: none; color: var(--text-dark); border-bottom: 1px solid #eee; text-align: center; transition: all 0.3s; }
+.mobile-menu a:hover { background-color: var(--primary-color); color: var(--text-light); }
+
+/* Hero */
+.hero-section { display: flex; justify-content: space-between; align-items: center; padding: 60px 5%; }
+.hero-text { max-width: 55%; }
+.hero-text .hello { display:inline-block; background-color:#e6f0ff; color:var(--primary-color); padding:5px 10px; border:1px solid var(--primary-color); border-radius:3px; margin-bottom:15px; font-size:0.9em; }
+.hero-text h2 { font-size:2.5em; margin-bottom:10px; line-height:1.2; font-weight:600; }
+.hero-text h2 strong { color:var(--primary-color); }
+.hero-text p { font-size:0.95em; color:#666; margin-bottom:30px; line-height:1.5; }
+.hero-buttons { display:flex; gap:15px; }
+.hero-buttons .btn { padding:12px 25px; border-radius:5px; text-decoration:none; font-weight:bold; transition:background-color 0.3s; border:2px solid transparent; }
+.hero-buttons .btn.primary { background-color:var(--primary-color); color:var(--text-light); }
+.hero-buttons .btn.secondary { background-color:#fff; color:var(--text-dark); border-color:#ccc; }
+.hero-buttons .btn.primary:hover { background-color:var(--dark-color); }
+.hero-buttons .btn.secondary:hover { border-color:var(--primary-color); }
+.hero-image-container { max-width:40%; position:relative; z-index:5; height:250px; display:flex; justify-content:center; align-items:center; }
+.hero-image-container img { width:80%; height:auto; border-radius:5px; object-fit:cover; }
+
+/* Skills */
+.skills-bar { background-color:#222; color:var(--text-light); display:flex; justify-content:space-around; padding:15px 5%; max-width:var(--max-width); margin:0 auto; border-radius:0 0 10px 10px; }
+.skill-item { text-align:center; font-weight:bold; font-size:0.9em; display:flex; align-items:center; gap:10px; }
+.skill-item::before { content:'+'; font-size:1.5em; color:var(--primary-color); }
+
+/* Video Section */
+.video-section { background:#f0f2f5; padding:30px 5%; }
+.video-section h2 { margin-bottom:15px; }
+#videoSearch { width:100%; padding:10px; border-radius:5px; border:1px solid #ccc; margin-bottom:20px; }
+#videoList { display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:15px; }
+.video-card { cursor:pointer; border-radius:5px; overflow:hidden; background:#fff; box-shadow:0 5px 15px rgba(0,0,0,0.1); transition:transform 0.3s; display:flex; flex-direction:column; }
+.video-card:hover { transform:scale(1.05); }
+.video-card video { width:100%; display:block; border-bottom:1px solid #eee; object-fit:cover; height:150px; }
+.video-card h4 { padding:8px; text-align:center; font-size:0.9em; color:var(--text-dark); }
+
+/* Fullscreen overlay */
+#videoOverlay {
+  display:none;
+  position:fixed;
+  top:0; left:0;
+  width:100%; height:100%;
+  background:rgba(0,0,0,0.95);
+  z-index:1000;
+  justify-content:center;
+  align-items:center;
+  flex-direction:column;
+  padding:20px;
 }
-
-body {
-  line-height: 1.6;
-  color: var(--text-dark);
-  background-color: #f7f9fc;
+#overlayCloseBtn {
+  position:absolute;
+  top:20px;
+  left:20px;
+  z-index:2001;
+  background:rgba(255,255,255,0.8);
+  border:none;
+  font-size:24px;
+  cursor:pointer;
+  border-radius:5px;
+  padding:5px 10px;
 }
+#videoOverlay video { max-width:90%; max-height:70%; margin-bottom:15px; }
+#videoOverlay h3 { color:white; margin-bottom:15px; }
+.overlay-ad { width:100%; max-width:728px; margin:0 auto; }
 
-/* Top header */
-.top-container {
-  background-image: linear-gradient(to right top, var(--deep-color), #002d73, #003c8c, #004ba5, var(--primary-color));
-  color: var(--text-light);
-  padding-bottom: 100px;
-  position: relative;
-  z-index: 1;
-}
-
-.header-top {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 15px 5%;
-  max-width: var(--max-width);
-  margin: 0 auto;
-}
-
-.logo-text {
-  font-size: 1.2em;
-  font-weight: bold;
-  letter-spacing: 1px;
-  color: var(--text-light);
-}
-
-.header-info-text {
-  font-size: 0.9em;
-  opacity: 0.8;
-  text-align: right;
-}
-
-.main-title-container {
-  text-align: center;
-  padding: 60px 5% 0;
-  max-width: 900px;
-  margin: 0 auto;
-}
-
-.main-title-container h1 {
-  font-size: 6vw;
-  font-weight: 900;
-  letter-spacing: 5px;
-  text-transform: uppercase;
-  line-height: 1;
-  color: rgba(255, 255, 255, 0.9);
-  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
-}
-
-/* Main content wrapper */
-.main-content-wrapper {
-  background-color: #fff;
-  max-width: var(--max-width);
-  margin: -80px auto 30px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-  border-radius: 10px;
-  position: relative;
-  z-index: 10;
-  overflow: hidden;
-}
-
-/* Navigation */
-.content-nav {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 25px 5%;
-  border-bottom: 1px solid #eee;
-  position: relative;
-}
-
-.content-nav .logo {
-  position: absolute;
-  left: 5%;
-  width: 30px;
-  height: 30px;
-  background-color: var(--primary-color);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
-  font-size: 0.8em;
-  font-weight: bold;
-}
-
-.content-nav ul {
-  list-style: none;
-  display: flex;
-  gap: 25px;
-}
-
-.content-nav a {
-  text-decoration: none;
-  color: var(--text-dark);
-  font-size: 0.9em;
-  font-weight: 500;
-  transition: color 0.3s;
-}
-
-.content-nav a:hover {
-  color: var(--primary-color);
-}
-
-/* Hamburger icon */
-.menu-toggle {
-  position: absolute;
-  right: 5%;
-  font-size: 1.8em;
-  cursor: pointer;
-  color: var(--text-dark);
-  display: none;
-}
-
-/* Mobile menu */
-.mobile-menu {
-  display: none;
-  flex-direction: column;
-  background-color: white;
-  position: absolute;
-  top: 60px;
-  right: 5%;
-  width: 200px;
-  border-radius: 10px;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-  overflow: hidden;
-}
-
-.mobile-menu a {
-  padding: 12px;
-  text-decoration: none;
-  color: var(--text-dark);
-  border-bottom: 1px solid #eee;
-  text-align: center;
-  transition: all 0.3s;
-}
-
-.mobile-menu a:hover {
-  background-color: var(--primary-color);
-  color: var(--text-light);
-}
-
-.contact-btn {
-  display: none;
-}
-
-.hero-section {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 60px 5%;
-}
-
-.hero-text {
-  max-width: 55%;
-}
-
-.hero-text .hello {
-  display: inline-block;
-  background-color: #e6f0ff;
-  color: var(--primary-color);
-  padding: 5px 10px;
-  border: 1px solid var(--primary-color);
-  border-radius: 3px;
-  font-size: 0.9em;
-  margin-bottom: 15px;
-}
-
-.hero-text h2 {
-  font-size: 2.5em;
-  line-height: 1.2;
-  margin-bottom: 10px;
-  font-weight: 600;
-}
-
-.hero-text h2 strong {
-  color: var(--primary-color);
-}
-
-.hero-text p {
-  font-size: 0.95em;
-  color: #666;
-  margin-bottom: 30px;
-  line-height: 1.5;
-}
-
-.hero-buttons {
-  display: flex;
-  gap: 15px;
-}
-
-.hero-buttons .btn {
-  padding: 12px 25px;
-  border-radius: 5px;
-  text-decoration: none;
-  font-weight: bold;
-  transition: background-color 0.3s;
-  border: 2px solid transparent;
-}
-
-.hero-buttons .btn.primary {
-  background-color: var(--primary-color);
-  color: var(--text-light);
-}
-
-.hero-buttons .btn.secondary {
-  background-color: #fff;
-  color: var(--text-dark);
-  border-color: #ccc;
-}
-
-.hero-buttons .btn.primary:hover {
-  background-color: var(--dark-color);
-}
-
-.hero-buttons .btn.secondary:hover {
-  border-color: var(--primary-color);
-}
-
-/* Image Container */
-.hero-image-container {
-  max-width: 40%;
-  position: relative;
-  z-index: 5;
-  height: 250px; 
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.hero-image-container img {
-  width: 80%; 
-  height: auto;
-  border-radius: 5px;
-  object-fit: cover;
-  z-index: 10;
-}
-
-.blue-blob {
-  position: absolute;
-  background-color: var(--primary-color);
-  opacity: 0.15;
-  border-radius: 50%;
-  z-index: 5;
-}
-
-.blob-1 {
-  width: 280px;
-  height: 280px;
-  bottom: 50px;
-  right: 50px;
-}
-
-.image-tag {
-  position: absolute;
-  background-color: var(--primary-color);
-  color: var(--text-light);
-  padding: 5px 10px;
-  border-radius: 5px;
-  font-size: 0.7em;
-  font-weight: bold;
-  z-index: 15;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-}
-
-.tag-web {
-  top: 50px;
-  left: 20px;
-}
-
-.tag-uiux {
-  bottom: 80px;
-  right: 30px;
-  background-color: #000;
-}
-
-.skills-bar {
-  background-color: #222;
-  color: var(--text-light);
-  display: flex;
-  justify-content: space-around;
-  padding: 15px 5%;
-  max-width: var(--max-width);
-  margin: 0 auto;
-  border-radius: 0 0 10px 10px;
-}
-
-.skill-item {
-  text-align: center;
-  font-weight: bold;
-  font-size: 0.9em;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.skill-item::before {
-  content: '+';
-  font-size: 1.5em;
-  color: var(--primary-color);
-}
-
-@media (max-width: 900px) {
-  .hero-section {
-    flex-direction: column;
-    padding: 40px 5%;
-  }
-
-  .hero-text {
-    max-width: 100%;
-    margin-bottom: 30px;
-    text-align: left; 
-  }
-
-  .hero-image-container {
-    max-width: 100%;
-    height: auto;
-    margin-top: 30px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-shrink: 0;
-  }
-
-  .hero-image-container img {
-    width: 100%; 
-    height: auto;
-    border-radius: 5px;
-    object-fit: cover;
-  }
-
-  .header-top {
-    flex-direction: row;
-    justify-content: space-between;
-    padding: 15px 5%;
-  }
-
-  .menu-toggle {
-    display: block;
-  }
-
-  .content-nav ul {
-    display: none;
-  }
+/* Responsive */
+@media (max-width:900px){
+  .hero-section{flex-direction:column;padding:40px 5%;}
+  .hero-text{max-width:100%;margin-bottom:30px;}
+  .hero-image-container{max-width:100%;height:auto;margin-top:30px; display:flex; justify-content:center;}
+  .hero-image-container img{width:100%; height:auto;}
+  .header-top{flex-direction:row; justify-content:space-between;}
+  .menu-toggle{display:block;}
+  .content-nav ul{display:none;}
 }
 </style>
+</head>
+<body>
 
 <div class="top-container">
   <header class="header-top">
     <div class="logo-text">SnakBit</div>
     <div class="header-info-text">TAKENDRA BAM</div>
   </header>
-
   <div class="main-title-container">
     <h1>Build.Code</h1>
     <h1>Create.</h1>
@@ -415,27 +146,16 @@ body {
   <section class="hero-section">
     <div class="hero-text">
       <span class="hello">Hey there 👋</span>
-      <h2>
-        I'm <strong>Takendra Bam</strong><br>
-        Developer, Designer &<br>
-        Professional Bug Creator
-      </h2>
-      <p>
-        18 y/o developer from Nepal 🇳🇵<br>
-        Currently building <strong>.....secret</strong> — a Gen-Z style platform.<br>
-        I love clean UI, privacy-first systems, and spicy samosas 😎
-      </p>
+      <h2>I'm <strong>Takendra Bam</strong><br>Developer, Designer &<br>Professional Bug Creator</h2>
+      <p>18 y/o developer from Nepal 🇳🇵<br>Currently building <strong>.....secret</strong> — a Gen-Z style platform.<br>I love clean UI, privacy-first systems, and spicy samosas 😎</p>
       <div class="hero-buttons">
         <a href="https://github.com/Takendra" class="btn primary">GitHub</a>
         <a href="https://www.facebook.com/takendra.bam.846386" class="btn secondary">Facebook</a>
       </div>
     </div>
-
     <div class="hero-image-container">
       <div class="blue-blob blob-1"></div>
       <img src="https://raw.githubusercontent.com/TakendraBam432/public-images/main/20251101_221921.png" alt="Takendra Bam">
-      <span class="image-tag tag-web">Developer</span>
-      <span class="image-tag tag-uiux">Cybersecurity</span>
     </div>
   </section>
 
@@ -445,6 +165,31 @@ body {
     <div class="skill-item">UI/UX Design</div>
     <div class="skill-item">Cybersecurity</div>
   </div>
+
+  <!-- Video Section -->
+  <section class="video-section">
+    <div style="max-width: var(--max-width); margin:0 auto;">
+      <h2>My Videos</h2>
+      <input type="text" id="videoSearch" placeholder="Search videos...">
+      <div id="videoList"></div>
+    </div>
+  </section>
+
+  <!-- Fullscreen overlay -->
+  <div id="videoOverlay">
+    <button id="overlayCloseBtn" onclick="closeVideoOverlay()">✖</button>
+    <video id="overlayVideo" controls></video>
+    <h3 id="overlayTitle"></h3>
+    <div class="overlay-ad">
+      <!-- Replace with your AdSense code -->
+      <ins class="adsbygoogle"
+           style="display:block"
+           data-ad-client="pub-7478748792382893"
+           data-ad-slot="1885290571"
+           data-ad-format="auto"
+           data-full-width-responsive="true"></ins>        
+    </div>
+  </div>
 </div>
 
 <script>
@@ -452,6 +197,78 @@ function toggleMenu() {
   const menu = document.getElementById('mobileMenu');
   menu.style.display = menu.style.display === 'flex' ? 'none' : 'flex';
 }
+
+const videoList = document.getElementById('videoList');
+const videoSearch = document.getElementById('videoSearch');
+const videoOverlay = document.getElementById('videoOverlay');
+const overlayVideo = document.getElementById('overlayVideo');
+const overlayTitle = document.getElementById('overlayTitle');
+
+// Fetch videos
+async function fetchVideos() {
+  try {
+    const res = await fetch('https://raw.githubusercontent.com/TakendraBam432/takendra-posts/main/videos.json');
+    const videos = await res.json();
+    displayVideos(videos);
+  } catch(err) {
+    console.error('Error fetching videos:', err);
+  }
+}
+
+// Display videos and generate middle-frame thumbnail
+function displayVideos(videos) {
+  videoList.innerHTML = '';
+  videos.forEach(video => {
+    const card = document.createElement('div');
+    card.className = 'video-card';
+    // Use video element for thumbnail
+    const vidEl = document.createElement('video');
+    vidEl.src = video.url;
+    vidEl.muted = true;
+    vidEl.preload = 'metadata';
+    vidEl.currentTime = 10; // attempt to seek 10s for thumbnail
+    vidEl.style.objectFit = 'cover';
+    vidEl.style.height = '150px';
+    card.appendChild(vidEl);
+    const h4 = document.createElement('h4');
+    h4.textContent = video.title;
+    card.appendChild(h4);
+    card.onclick = () => openVideoOverlay(video);
+    videoList.appendChild(card);
+  });
+}
+
+// Search functionality
+videoSearch.addEventListener('input', () => {
+  const query = videoSearch.value.toLowerCase();
+  const cards = videoList.querySelectorAll('.video-card');
+  cards.forEach(card => {
+    const title = card.querySelector('h4').textContent.toLowerCase();
+    card.style.display = title.includes(query) ? 'flex' : 'none';
+  });
+});
+
+// Overlay open
+function openVideoOverlay(video) {
+  overlayVideo.src = video.url;
+  overlayTitle.textContent = video.title;
+  videoOverlay.style.display = 'flex';
+  overlayVideo.play();
+}
+
+// Overlay close
+function closeVideoOverlay() {
+  overlayVideo.pause();
+  overlayVideo.src = '';
+  videoOverlay.style.display = 'none';
+}
+
+// Init
+fetchVideos();
+
+// Load AdSense
+(window.adsbygoogle = window.adsbygoogle || []).push({});
 </script>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 </body>
 </html>
